@@ -76,7 +76,7 @@ var (
 // containing a set of valid root certificates in Mozilla's Root Store.
 //
 // This function panics if an issue is encountered parsing the embedded
-// intermediates collection; because CI validates the root certificates bundle
+// certificates collection; because CI validates the root certificates bundle
 // generated from the upstream Mozilla report it is expected to always be in a
 // valid/consistent state.
 //
@@ -90,7 +90,7 @@ func MustGetIncludedAllCACerts() []*x509.Certificate {
 // certificate hashes for valid root certificates in Mozilla's Root Store.
 //
 // This function panics if an issue is encountered parsing the embedded
-// intermediates collection; because CI validates the certificates bundle
+// certificates collection; because CI validates the certificates bundle
 // generated from the upstream Mozilla report it is expected to always be in a
 // valid/consistent state.
 //
@@ -135,7 +135,7 @@ func GetIncludedAllCACertsHashes() ([]string, error) {
 // Store with the Websites (TLS/SSL) trust bit enabled.
 //
 // This function panics if an issue is encountered parsing the embedded
-// intermediates collection; because CI validates the root certificates bundle
+// certificates collection; because CI validates the root certificates bundle
 // generated from the upstream Mozilla report it is expected to always be in a
 // valid/consistent state.
 //
@@ -150,7 +150,7 @@ func MustGetIncludedCACertsTrustBitWebsites() []*x509.Certificate {
 // with the Websites (TLS/SSL) trust bit enabled.
 //
 // This function panics if an issue is encountered parsing the embedded
-// intermediates collection; because CI validates the root certificates bundle
+// certificates collection; because CI validates the root certificates bundle
 // generated from the upstream Mozilla report it is expected to always be in a
 // valid/consistent state.
 //
@@ -197,7 +197,7 @@ func GetIncludedCACertsTrustBitWebsitesHashes() ([]string, error) {
 // Store with the Email (S/MIME) trust bit enabled.
 //
 // This function panics if an issue is encountered parsing the embedded
-// intermediates collection; because CI validates the root certificates bundle
+// certificates collection; because CI validates the root certificates bundle
 // generated from the upstream Mozilla report it is expected to always be in a
 // valid/consistent state.
 //
@@ -212,7 +212,7 @@ func MustGetIncludedCACertsTrustBitEmail() []*x509.Certificate {
 // the Email (S/MIME) trust bit enabled.
 //
 // This function panics if an issue is encountered parsing the embedded
-// intermediates collection; because CI validates the root certificates bundle
+// certificates collection; because CI validates the root certificates bundle
 // generated from the upstream Mozilla report it is expected to always be in a
 // valid/consistent state.
 //
@@ -259,9 +259,17 @@ func GetIncludedCACertsTrustBitEmailHashes() ([]string, error) {
 // Mozilla's Root Store.
 //
 // This function panics if an issue is encountered parsing the embedded
-// intermediates collection; because CI validates the root certificates bundle
-// generated from the upstream Mozilla report it is expected to always be in a
-// valid/consistent state.
+// certificates collection.
+//
+// NOTE: Go 1.23 changed the default behavior of
+// [crypto/x509.ParseCertificate] to reject serial numbers that are negative.
+// Because some of the root certificates in this collection contain negative
+// serial numbers you will need to explicitly enable the `x509negativeserial`
+// GODEBUG setting in your application *OR* opt to use the certificate hashes
+// for removed root certificates instead of this collection.
+//
+// See also: https://pkg.go.dev/crypto/x509#ParseCertificate and
+// https://go.dev/doc/godebug.
 //
 // This collection is generated from reports provided by Mozilla via
 // https://wiki.mozilla.org/CA/Removed_Certificates
@@ -274,9 +282,9 @@ func MustGetRemovedCACerts() []*x509.Certificate {
 // Store.
 //
 // This function panics if an issue is encountered parsing the embedded
-// intermediates collection; because CI validates the root certificates bundle
-// generated from the upstream Mozilla report it is expected to always be in a
-// valid/consistent state.
+// certificate hashes collection; because CI validates the root certificates
+// bundle generated from the upstream Mozilla report it is expected to always
+// be in a valid/consistent state.
 //
 // This collection is generated from reports provided by Mozilla via
 // https://wiki.mozilla.org/CA/Removed_Certificates
@@ -288,10 +296,17 @@ func MustGetRemovedCACertsHashes() []string {
 // set of root certificates which have been removed from Mozilla's Root Store.
 //
 // This function returns an error if an issue is encountered parsing the
-// embedded certificates collection. With CI validating the certificates
-// bundle generated from the upstream Mozilla report it is expected to always
-// be in a valid/consistent state. Even so, this function allows the caller to
-// guard against any potential issues loading certificates.
+// embedded certificates collection.
+//
+// NOTE: Go 1.23 changed the default behavior of
+// [crypto/x509.ParseCertificate] to reject serial numbers that are negative.
+// Because some of the root certificates in this collection contain negative
+// serial numbers you will need to explicitly enable the `x509negativeserial`
+// GODEBUG setting in your application *OR* opt to use the certificate hashes
+// for removed root certificates instead of this collection.
+//
+// See also: https://pkg.go.dev/crypto/x509#ParseCertificate and
+// https://go.dev/doc/godebug.
 //
 // This collection is generated from reports provided by Mozilla via
 // https://wiki.mozilla.org/CA/Removed_Certificates
@@ -324,9 +339,17 @@ func GetRemovedCACertsHashes() ([]string, error) {
 // type).
 //
 // This function panics if an issue is encountered parsing the embedded
-// intermediates collection; because CI validates the root certificates bundle
-// generated from the upstream Mozilla report it is expected to always be in a
-// valid/consistent state.
+// certificates collection.
+//
+// NOTE: Go 1.23 changed the default behavior of
+// [crypto/x509.ParseCertificate] to reject serial numbers that are negative.
+// Because some of the root certificates in this collection contain negative
+// serial numbers you will need to explicitly enable the `x509negativeserial`
+// GODEBUG setting in your application *OR* opt to use the certificate hashes
+// for removed root certificates instead of this collection.
+//
+// See also: https://pkg.go.dev/crypto/x509#ParseCertificate and
+// https://go.dev/doc/godebug.
 //
 // This collection is generated from reports provided by Mozilla via
 // https://wiki.mozilla.org/CA/Removed_Certificates
@@ -347,7 +370,7 @@ func MustGetUpcomingRemovalsCACerts() []*x509.Certificate {
 // type).
 //
 // This function panics if an issue is encountered parsing the embedded
-// intermediates collection; because CI validates the root certificates bundle
+// certificates collection; because CI validates the root certificates bundle
 // generated from the upstream Mozilla report it is expected to always be in a
 // valid/consistent state.
 //
@@ -370,10 +393,17 @@ func MustGetUpcomingRemovalsCACertsHashes() []string {
 // type).
 //
 // This function returns an error if an issue is encountered parsing the
-// embedded certificates collection. With CI validating the certificates
-// bundle generated from the upstream Mozilla report it is expected to always
-// be in a valid/consistent state. Even so, this function allows the caller to
-// guard against any potential issues loading certificates.
+// embedded certificates collection.
+//
+// NOTE: Go 1.23 changed the default behavior of
+// [crypto/x509.ParseCertificate] to reject serial numbers that are negative.
+// Because some of the root certificates in this collection contain negative
+// serial numbers you will need to explicitly enable the `x509negativeserial`
+// GODEBUG setting in your application *OR* opt to use the certificate hashes
+// for removed root certificates instead of this collection.
+//
+// See also: https://pkg.go.dev/crypto/x509#ParseCertificate and
+// https://go.dev/doc/godebug.
 //
 // This collection is generated from reports provided by Mozilla via
 // https://wiki.mozilla.org/CA/Removed_Certificates
