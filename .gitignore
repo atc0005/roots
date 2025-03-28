@@ -23,3 +23,12 @@ go.work.sum
 
 # env file
 .env
+
+# Ignore local Visual Studio Code settings
+.vscode/
+
+# Ignore local "scratch" directory of temporary files
+/scratch
+
+# Ignore generated/copied assets as we can regenerate as needed.
+/release_assets
