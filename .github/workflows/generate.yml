@@ -1,4 +1,4 @@
-name: Update intermediates collection
+name: Update roots collection
 on:
   # NOTE: Omit automatic tagging for pushes.
   # push:
