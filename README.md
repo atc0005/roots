@@ -1,17 +1,19 @@
 <!-- omit in toc -->
-# atc0005/mozilla-roots
+# atc0005/roots
 
-The roots package provides embedded hashes and root certificates from the Mozilla Root Program.
+The roots package provides embedded hashes and root certificates from the
+Mozilla Root Program.
 
-[![Latest Release](https://img.shields.io/github/release/atc0005/mozilla-roots.svg?style=flat-square)](https://github.com/atc0005/mozilla-roots/releases/latest)
-[![Go Reference](https://pkg.go.dev/badge/github.com/atc0005/mozilla-roots.svg)](https://pkg.go.dev/github.com/atc0005/mozilla-roots)
-[![go.mod Go version](https://img.shields.io/github/go-mod/go-version/atc0005/mozilla-roots)](https://github.com/atc0005/mozilla-roots)
+[![Latest Release](https://img.shields.io/github/release/atc0005/roots.svg?style=flat-square)](https://github.com/atc0005/roots/releases/latest)
+[![Go Reference](https://pkg.go.dev/badge/github.com/atc0005/roots.svg)](https://pkg.go.dev/github.com/atc0005/roots)
+[![go.mod Go version](https://img.shields.io/github/go-mod/go-version/atc0005/roots)](https://github.com/atc0005/roots)
 
 <!-- omit in toc -->
 ## Table of Contents
 
 - [Project home](#project-home)
 - [Overview](#overview)
+- [Files / Assets](#files--assets)
 - [Recommendations](#recommendations)
 - [Stability](#stability)
 - [Use cases](#use-cases)
@@ -43,12 +45,15 @@ certificates](https://wiki.mozilla.org/CA/Additional_Trust_Changes) which
 Mozilla applies separately via the NSS library or within Firefox and
 Thunderbird.
 
-This package provides:
+This package provides certificates and certificate hashes for:
 
-- valid CA (root) certificates in the Mozilla Root Program
+- valid CA (root) certificates in Mozilla's CA Certificate Program
+- valid root certificates in Mozilla's Root Store with the Email (S/MIME)
+  Trust Bit enabled
+- valid root certificates in Mozilla's Root Store with the Websites (TLS/SSL)
+  Trust Bit enabled
 - removed CA (root) certificates
 - upcoming CA (root) certificate removals
-- certificate hashes for all sets
 
 > [!NOTE]
 >
@@ -57,6 +62,52 @@ direct access to `x509.Certificate` values for certificate chain analysis
 purposes and not general use applications/tooling.
 
 See the linked documentation for more information.
+
+## Files / Assets
+
+> [!NOTE]
+>
+> While these files are provided directly as part of project releases the
+> primary purpose for the `*.pem` (certificates) and `*.txt` (certificate
+> hashes) files in this project is to provide embedded resources for
+> diagnostic tools which might not otherwise have ready access to current
+> versions of root certificates.
+
+```console
+$ tree certificates hashes mozilla_reports/
+certificates
+├── IncludedCACertificates-TrustBitEmail.pem
+├── IncludedCACertificates-TrustBitWebsites.pem
+├── IncludedCACertificates.pem
+├── RemovedCACertificates.pem
+└── UpcomingRootRemovalsReport.pem
+hashes
+├── IncludedCACertificateHashes-TrustBitEmail.txt
+├── IncludedCACertificateHashes-TrustBitWebsites.txt
+├── IncludedCACertificateHashes.txt
+├── RemovedCACertificateHashes.txt
+└── UpcomingRootRemovalsReport.txt
+mozilla_reports/
+├── IncludedCACertificateWithPEMReport.csv
+├── RemovedCACertificateWithPEMReport.csv
+└── UpcomingRootRemovalsReport.csv
+```
+
+Summary:
+
+- CSV files are the original reports retrieved from Mozilla
+  - <https://wiki.mozilla.org/CA/Included_Certificates>
+  - <https://wiki.mozilla.org/CA/Removed_Certificates>
+- `hashes` files are SHA-256 fingerprints of the certificates
+- `certificates` files contain certificates in PEM format extracted from
+  Mozilla CA reports
+
+> [!WARNING]
+>
+> The `IncludedCACertificates-TrustBitEmail.*` and
+> `IncludedCACertificates-TrustBitWebsites.*` files have some overlap; these
+> files are intended to provide certificates which have that trust bit enabled
+> but are not limited to *only* that trust bit.
 
 ## Recommendations
 
@@ -84,7 +135,8 @@ use by diagnostic tools when evaluating certificate chains for common
 misconfiguration issues.
 
 The collections of root certificate hashes are useful for identifying which of
-the the provided collections an existing root certificate belongs to.
+the provided collections an evaluated root certificate belongs to (or which
+intermediate was signed by it).
 
 ## Contributions
 
@@ -150,4 +202,4 @@ using functionality provided by this project:
 
 <!-- Footnotes here  -->
 
-[repo-url]: <https://github.com/atc0005/mozilla-roots>  "This project's GitHub repo"
+[repo-url]: <https://github.com/atc0005/roots>  "This project's GitHub repo"
