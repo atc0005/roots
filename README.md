@@ -15,6 +15,8 @@ Mozilla Root Program.
 - [Overview](#overview)
 - [Files / Assets](#files--assets)
 - [Recommendations](#recommendations)
+- [Requirements](#requirements)
+  - [Go 1.23+](#go-123)
 - [Stability](#stability)
 - [Use cases](#use-cases)
 - [Contributions](#contributions)
@@ -115,6 +117,30 @@ Summary:
   import this package
 - For best results this package should be kept up to date using tools such as
   Dependabot
+
+## Requirements
+
+### Go 1.23+
+
+If using Go 1.23 or newer your application will need to set the
+`x509negativeserial` `GODEBUG` setting in your main application, your `go.mod`
+file or your `go.work` file to `1`. This support is needed for parsing of some
+older root certificates which have negative serial numbers.
+
+>[!NOTE] Alternatives:
+>
+> - opt to not use the "removed" or "upcoming removals" CA (root) certificates
+>   collections (which contain negative serial numbers)
+>   - use the hashes collections instead for identifying whether an evaluated
+>     root cert is in either collection
+> - build with Go versions earlier than Go 1.23
+>   - not recommended as earlier versions are unsupported
+
+See also:
+
+- <https://pkg.go.dev/crypto/x509#ParseCertificate>
+- <https://golang.org/doc/godebug>
+- <https://stackoverflow.com/questions/79061981>
 
 ## Stability
 
