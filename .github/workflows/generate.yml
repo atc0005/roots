@@ -159,14 +159,25 @@ jobs:
         env:
           NEXT_TAG: ${{ needs.git_describe_semver.outputs.version }}
         run: |-
-          git add mozilla_reports
+          echo "Attempting to stage relevant content for a new release."
           git add certificates
           git add hashes
           git add count.go
 
-          git commit -a -m "roots: update certificates" || exit 0
+          if git diff --staged --quiet; then
+            echo "No relevant changes staged. Skipping commit."
+          else
+            echo "Relevant content for a new release has been staged."
+            echo "Staging source Mozilla report files also for auditing purposes."
+            git add mozilla_reports
+            git commit -m "roots: update certificates"
 
-          bash create-tag.sh "${NEXT_TAG}"
+            echo "Creating new tag: ${NEXT_TAG}."
+            bash create-tag.sh "${NEXT_TAG}"
 
-          git push
-          git push --tags
+            echo "Pushing commit."
+            git push
+
+            echo "Pushing new tag."
+            git push --tags
+          fi
