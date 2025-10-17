@@ -625,8 +625,8 @@ func generateAllRootsFiles(counterLog *writtenCounterLog) error {
 		OwnerHeaderName:                     "Owner",                           // Column A
 		IssuerOrg:                           1,                                 // Column B
 		IssuerOrgHeaderName:                 "Certificate Issuer Organization", // Column B
-		PEM:                                 35,                                // Column AJ
-		PEMHeaderName:                       "PEM Info",                        // Column AJ
+		PEM:                                 36,                                // Column AK
+		PEMHeaderName:                       "PEM Info",                        // Column AK
 		Hash:                                5,                                 // Column F
 		HashHeaderName:                      "SHA-256 Fingerprint",             // Column F
 		TrustBits:                           11,                                // Column L
