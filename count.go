@@ -9,8 +9,8 @@ const (
 	expectedCountCACertsIncludedHashesAll      = 181
 	expectedCountCACertsIncludedHashesWebsites = 144
 	expectedCountCACertsIncludedHashesEmail    = 105
-	expectedCountCACertsRemoved                = 87
-	expectedCountCACertsRemovedHashes          = 87
+	expectedCountCACertsRemoved                = 86
+	expectedCountCACertsRemovedHashes          = 86
 	expectedCountCACertsUpcomingRemovals       = 0
 	expectedCountCACertsUpcomingRemovalsHashes = 0
 )
