@@ -38,7 +38,7 @@ jobs:
         run: docker --version
 
       - name: Clone repo with full history
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           # Needed in order to retrieve tags for use with semver calculations
           fetch-depth: 0
@@ -111,7 +111,7 @@ jobs:
       # https://github.com/orgs/community/discussions/27028
       # https://docs.github.com/en/developers/overview/managing-deploy-keys#deploy-keys
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           # Use custom SSH Deploy Key to create commits/tags & push them.
           #
