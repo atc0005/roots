@@ -3,14 +3,14 @@
 package roots
 
 const (
-	expectedCountCACertsIncludedAll            = 166
-	expectedCountCACertsIncludedWebsites       = 118
-	expectedCountCACertsIncludedEmail          = 89
-	expectedCountCACertsIncludedHashesAll      = 166
-	expectedCountCACertsIncludedHashesWebsites = 118
-	expectedCountCACertsIncludedHashesEmail    = 89
-	expectedCountCACertsRemoved                = 102
-	expectedCountCACertsRemovedHashes          = 102
+	expectedCountCACertsIncludedAll            = 171
+	expectedCountCACertsIncludedWebsites       = 121
+	expectedCountCACertsIncludedEmail          = 90
+	expectedCountCACertsIncludedHashesAll      = 171
+	expectedCountCACertsIncludedHashesWebsites = 121
+	expectedCountCACertsIncludedHashesEmail    = 90
+	expectedCountCACertsRemoved                = 104
+	expectedCountCACertsRemovedHashes          = 104
 	expectedCountCACertsUpcomingRemovals       = 0
 	expectedCountCACertsUpcomingRemovalsHashes = 0
 )
